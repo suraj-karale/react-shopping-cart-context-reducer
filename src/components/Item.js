@@ -1,26 +1,59 @@
 import React from "react";
+
 import Rating from "./Common/Rating";
 import { Card, Button } from "react-bootstrap";
+import { CartState } from "../reducers/Context";
 
 const Item = ({ item }) => {
-  const { title, images, price, rating, fastDelivery } = item;
+  const {
+    state: { cart },
+    dispatch,
+  } = CartState();
+
+  const { title, images, price, rating, discountPercentage } = item;
+
   return (
-    <div class="card" style={{ width: "250px", marginBottom: "20px" }}>
+    <div className="card" style={{ width: "230px", margin: "10px 5px" }}>
       <img
         src={images[0]}
-        class="card-img-top"
+        className="card-img-top"
         style={{ height: "200px", padding: "5px" }}
         alt="..."
       />
-      <div class="card-body">
-        <h5 class="card-title">{title}</h5>
+      <div className="card-body">
+        <h5 className="card-title">{title}</h5>
         <Card.Subtitle style={{ paddingBottom: 10 }}>
-          <span>₹ {price}</span>
-          <br />
+          <span> {`₹ ${price} `}</span>
+          <div>
+            {discountPercentage && `with discount ${discountPercentage}%`}
+          </div>
           <Rating rating={rating} />
-          {fastDelivery ? <div>Fast Delivery</div> : <div>4 days delivery</div>}
         </Card.Subtitle>
-        <Button class="btn btn-primary">Add to cart</Button>
+        {cart.some((i) => i.id === item.id) ? (
+          <Button
+            className="btn btn-danger"
+            onClick={() => {
+              dispatch({
+                type: "REMOVE_TO_CART",
+                payload: item,
+              });
+            }}
+          >
+            Remove to cart
+          </Button>
+        ) : (
+          <Button
+            className="btn btn-primary"
+            onClick={() => {
+              dispatch({
+                type: "ADD_TO_CART",
+                payload: item,
+              });
+            }}
+          >
+            Add to cart
+          </Button>
+        )}
       </div>
     </div>
   );
