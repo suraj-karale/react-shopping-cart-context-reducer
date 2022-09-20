@@ -1,3 +1,5 @@
-# React shopping Cart demo website using context, Reducer, styled-components and react bootstrap
+# React shopping Cart demo website
 
-Live Demo - ## https://shopping-cart-demo-suraj.netlify.app/
+## Used context, Reducer, styled-components and react bootstrap
+
+## Live Demo - https://shopping-cart-demo-suraj.netlify.app/
